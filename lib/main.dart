@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_app_ui/detail.dart';
 
 import 'model.dart';
 
@@ -168,9 +169,9 @@ class ListRecommendation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {    
     List<Food> foodList = List();
-    foodList.add(Food(name: "Steak with Vegetables", description: "Fresh steak with add-ons", image: "https://raw.githubusercontent.com/rajayogan/flutterui-curveddesigns/master/assets/plate1.png"));
-    foodList.add(Food(name: "Steak with Vegetables", description: "Fresh steak with add-ons", image: "https://raw.githubusercontent.com/rajayogan/flutterui-curveddesigns/master/assets/plate1.png"));
-    foodList.add(Food(name: "Steak with Vegetables", description: "Fresh steak with add-ons", image: "https://raw.githubusercontent.com/rajayogan/flutterui-curveddesigns/master/assets/plate1.png"));
+    foodList.add(Food(name: "Steak with Vegetables", description: "Fresh steak with add-ons", image: "asset/food.png"));
+    foodList.add(Food(name: "Steak with Vegetables", description: "Fresh steak with add-ons", image: "asset/food.png"));
+    foodList.add(Food(name: "Steak with Vegetables", description: "Fresh steak with add-ons", image: "asset/food.png"));
 
     List<BoxShadow> shadowList = List();
     shadowList.add(BoxShadow(
@@ -194,72 +195,88 @@ class ListRecommendation extends StatelessWidget {
         itemCount: foodList.length,        
         scrollDirection: Axis.horizontal,
         itemBuilder: (_, idx) {        
-          return Container(
-            width: MediaQuery.of(context).size.width/2.3,
-            height: 200,
-            // color: Color(0xffA4A4A4),
-            child: Stack(
-              children: <Widget>[
-                // Box
-                Positioned(
-                  bottom: 0,
-                  child: Container(                    
-                    width: MediaQuery.of(context).size.width/2.3 - 30,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      // color: Color(0xff000000),                      
-                      borderRadius: BorderRadius.circular(25.0),
-                      color: Color(0xffDAEAB9),
-                      boxShadow: shadowList
-                    ),
-                  ),
-                ),
-                // Image
-                Positioned(
-                  right: 0,
-                  child: Container(
-                    width: 100,
-                    height: 100,
-                    child: Image.network(foodList[idx].image)
-                  ),
-                ),
-                // Name
-                Positioned(
-                  top: 0,                  
-                  child: Container(
-                      width: 100,
-                      padding: EdgeInsets.only(
-                        top : 50.0,
-                        left: 10.0
-                      ),
-                      child: Text(
-                        foodList[idx].name,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold                          
-                        ),
-                    ),
-                  ),
-                ),
-
-                // Description
-                Positioned(
-                  bottom: 0,                  
-                  child: Container(
-                      width: 100,
-                      padding: EdgeInsets.only(
-                        bottom : 20.0,
-                        left: 10.0
-                      ),
-                      child: Text(
-                        foodList[idx].description,
-                        style: TextStyle(                          
-                          fontSize: 13,
-                          color: Colors.black.withOpacity(0.5)
-                        ),
-                    ),
-                  ),
+          return GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => DetailPage(tag: "FoodImage$idx")
                 )
-              ],
+              );
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.width/2.3,
+              height: 200,
+              // color: Color(0xffA4A4A4),
+              child: Stack(
+                children: <Widget>[
+                  // Box
+                  Positioned(
+                    bottom: 0,
+                    child: Container(                    
+                      width: MediaQuery.of(context).size.width/2.3 - 30,
+                      height: 120,
+                      decoration: BoxDecoration(
+                        // color: Color(0xff000000),                      
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(25.0),
+                          bottomRight: Radius.circular(25.0),
+                        ),
+                        color: Color(0xffDAEAB9),
+                        // boxShadow: shadowList
+                      ),
+                    ),
+                  ),
+                  // Image
+                  Positioned(
+                    right: 0,
+                    child: Container(
+                      width: 100,
+                      height: 100,
+                      // child: Image.asset(foodList[idx].image)
+                      child: Hero(
+                        tag: "FoodImage$idx",
+                        child: Image.asset(foodList[idx].image)
+                      )
+                    ),
+                  ),
+                  // Name
+                  Positioned(
+                    top: 0,                  
+                    child: Container(
+                        width: 100,
+                        padding: EdgeInsets.only(
+                          top : 50.0,
+                          left: 10.0
+                        ),
+                        child: Text(
+                          foodList[idx].name,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold                          
+                          ),
+                      ),
+                    ),
+                  ),
+
+                  // Description
+                  Positioned(
+                    bottom: 0,                  
+                    child: Container(
+                        width: 100,
+                        padding: EdgeInsets.only(
+                          bottom : 20.0,
+                          left: 10.0
+                        ),
+                        child: Text(
+                          foodList[idx].description,
+                          style: TextStyle(                          
+                            fontSize: 13,
+                            color: Colors.black.withOpacity(0.5)
+                          ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           );
         }
