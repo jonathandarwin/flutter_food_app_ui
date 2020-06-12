@@ -101,9 +101,10 @@ class Search extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.only(
           left: 20.0,
-          right: 10.0
+          right: 10.0,
+          bottom: 3.0
         ),
-        height: 40,
+        height: 40.0,
         decoration: BoxDecoration(       
           color: Colors.white,   
           borderRadius: BorderRadius.all(
@@ -111,12 +112,12 @@ class Search extends StatelessWidget {
           )
         ),        
         child: TextField(
-          decoration: InputDecoration(
+          decoration: InputDecoration(            
             hintText: "Search...",
             border: InputBorder.none,
             suffixIcon: Icon(
               Icons.search,
-              color: Colors.black.withOpacity(0.3),
+              color: Colors.black.withOpacity(0.3),              
             )
           ),
         ),
@@ -198,8 +199,9 @@ class ListRecommendation extends StatelessWidget {
           return GestureDetector(
             onTap: () {
               Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => DetailPage(tag: "FoodImage$idx")
+                PageRouteBuilder(
+                  pageBuilder: (_, animation, duration) => DetailPage(tag: "FoodImage$idx"),
+                  transitionDuration: Duration(milliseconds: 500)
                 )
               );
             },
